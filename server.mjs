@@ -1,17 +1,17 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import OpenAI from "openai";
+import { Configuration, OpenAIApi } from "openai"; // ✅ Correct import
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
 // ✅ OpenAI config
-const configuration = new OpenAI.Configuration({
+const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAI.OpenAIApi(configuration);
+const openai = new OpenAIApi(configuration);
 
 // Chat endpoint
 app.post("/chat", async (req, res) => {
@@ -34,6 +34,5 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// Port setup
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
